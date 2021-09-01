@@ -1,5 +1,7 @@
 // primer ejercicio
 
+console.log("***********************primer ejercicio***********************");
+
 var numero1 = 5;
 var numero2 = 8;
 
@@ -17,6 +19,7 @@ if (numero1 + 1 < numero2) {
 }
 
 // desafio en clase
+console.log("***********************desafio en clase***********************");
 
 let valores = [true, 5, false, "hola", "adios", 2];
 
@@ -51,7 +54,7 @@ const falsePosition = (value) => {
     }
 }
 
-console.log("Valor false se encuentra en la posisicón " + falsePosition(false) + " del array.");
+console.log("El valor false se encuentra en la posisicón " + falsePosition(false) + " del array.");
 
 // 3- Crear otra función que devuelva el resultado de la operación entre los dos elementos numéricos que contiene el array.<br>Dicha función recibirá dos parámetros: el array y la operación ('suma', 'resta', 'mult', 'div') a realizar
 
@@ -89,4 +92,66 @@ const calculator = (operation) => {
 }
 
 let operacion = 'suma';
-console.log(`resultado de la operación ${operacion}` + calculator(operacion));
+console.log(`El resultado de la operación ${operacion} es: ` + calculator(operacion));
+
+
+// Ejercicios desafio entregable
+
+console.log("***********************Ejercicios desafio entregable***********************");
+
+// 1- 
+class Usuario {
+    // 2-
+    constructor(nombre, apellido, libros, mascotas){
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.libros = libros;
+        this.mascotas = mascotas;
+    }
+
+    // 3-
+    getFullName(){
+        return this.apellido + ", " + this.nombre;
+    }
+
+    addMascota(mascota){
+        this.mascotas.push(mascota);
+        return "mascota agregada " + mascota.nombre;
+    }
+
+    countMascotas() {
+        return this.mascotas.length;
+    }
+
+    addBook(nombreLibro, autorLibro){
+        this.libros.push( new Libro(nombreLibro, autorLibro) );
+    }
+
+    getBookNames() {
+        return this.libros.map(libro => libro.nombre);
+    }
+}
+
+
+class Mascota {
+    constructor(nombre){
+        this.nombre = nombre;
+    }
+}
+class Libro {
+    constructor(nombre, autor){
+        this.nombre = nombre;
+        this.autor = autor;
+    }
+}
+
+let libros = [new Libro("The Lord of the rings", "JRR Tolkien"), new Libro("The Hobbit", "JRR Tolkien")];
+let mascotas = [new Mascota("Ona"), new Mascota("India")];
+
+// 4-
+let user = new Usuario("Carlos", "Mentaberry", libros, mascotas)
+
+console.log("Nombre completo: " + user.getFullName());
+console.log("Agrego mascota: " + user.addMascota(new Mascota("Bichito")));
+console.log("Cantidad de mascotas: " + user.countMascotas());
+console.log("Libros: " + user.getBookNames());
