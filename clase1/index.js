@@ -1,0 +1,96 @@
+// primer ejercicio
+
+var numero1 = 5;
+var numero2 = 8;
+
+if (numero1 <= numero2) {
+    console.log("numero1 no es mayor que numero2");
+}
+if (numero2 > 0) {
+    console.log("numero1 no es mayor que numero2");
+}
+if (numero1 < 0 || numero1 != 0) {
+    console.log("numero1 es negativo o distinto de cero");
+}
+if (numero1 + 1 < numero2) {
+    console.log("Incrementar en 1 unidad el valor de numero1 no lo hace mayor o igual que numero2");
+}
+
+// desafio en clase
+
+let valores = [true, 5, false, "hola", "adios", 2];
+
+// 1- Realizar una función que reciba como parámetro el array y devuelva el elemento de texto con más caractes
+const maxLenghtWord = () => {
+    let longWord = '';
+    let valoresFiltrados = valores.filter(val => typeof(val) == 'string');
+    
+    for (i = 0; i<= valoresFiltrados.length -1; i++) {
+        if(i == 0){
+            longWord = valoresFiltrados[i];
+        }else{
+            if(valoresFiltrados[i].toString().length > longWord.length){
+                longWord = valoresFiltrados[i];
+            }
+        }
+    }
+    document.getElementById("ej1").innerText = "Palabra mas larga: " + longWord;
+    return longWord;
+}
+
+console.log(maxLenghtWord());
+
+
+// 2- Similar al punto anterior, que devuelva en que posición del array se encuentra un 'false'
+const falsePosition = (value) => {
+    for (i = 0; i<= valores.length -1; i++) {
+        console.log(valores[i]);
+        if(typeof(valores[i]) == "boolean"){
+            if(valores[i] === value){
+                document.getElementById("ej2").innerText = "Posición del array: " + i;
+                return i;
+            }
+        }
+    }
+}
+
+console.log(falsePosition(false));
+
+// 3- Crear otra función que devuelva el resultado de la operación entre los dos elementos numéricos que contiene el array.<br>Dicha función recibirá dos parámetros: el array y la operación ('suma', 'resta', 'mult', 'div') a realizar
+
+const calculator = (operation) => {
+    let result = 0;
+    let firstNum, lastNum;
+    let isFirst = false;
+
+    for (i = 0; i<= valores.length -1; i++) {
+        console.log(valores[i]);
+        if(typeof(valores[i]) == "number"){
+            if(!isFirst){
+                firstNum = valores[i];
+            }else{
+                lastNum = valores[i];
+            }
+            isFirst = true;
+        }
+    }
+
+    switch (operation.toLowerCase()) {
+        case "suma":
+            result = firstNum + lastNum;
+            break;
+        case "resta":
+            result = firstNum - lastNum;
+            break;
+        case "mult":
+            result = firstNum * lastNum;
+            break;
+        case "div":
+            result = firstNum / lastNum;
+            break;
+    }
+    document.getElementById("ej3").innerText = `Resultado de la operación ${operation.toLowerCase()}: ` + result;
+    return result;
+}
+
+console.log(calculator('suma'));
