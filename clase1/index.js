@@ -34,7 +34,6 @@ const maxLenghtWord = () => {
             }
         }
     }
-    document.getElementById("ej1").innerText = "Palabra mas larga: " + longWord;
     return longWord;
 }
 
@@ -47,7 +46,6 @@ const falsePosition = (value) => {
         console.log(valores[i]);
         if(typeof(valores[i]) == "boolean"){
             if(valores[i] === value){
-                document.getElementById("ej2").innerText = "Posición del array: " + i;
                 return i;
             }
         }
@@ -89,7 +87,6 @@ const calculator = (operation) => {
             result = firstNum / lastNum;
             break;
     }
-    document.getElementById("ej3").innerText = `Resultado de la operación ${operation.toLowerCase()}: ` + result;
     return result;
 }
 
