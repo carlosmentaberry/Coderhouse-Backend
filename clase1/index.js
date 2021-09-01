@@ -37,13 +37,12 @@ const maxLenghtWord = () => {
     return longWord;
 }
 
-console.log(maxLenghtWord());
+console.log("La palabra más larga del array es: " + maxLenghtWord());
 
 
 // 2- Similar al punto anterior, que devuelva en que posición del array se encuentra un 'false'
 const falsePosition = (value) => {
     for (i = 0; i<= valores.length -1; i++) {
-        console.log(valores[i]);
         if(typeof(valores[i]) == "boolean"){
             if(valores[i] === value){
                 return i;
@@ -52,7 +51,7 @@ const falsePosition = (value) => {
     }
 }
 
-console.log(falsePosition(false));
+console.log("Valor false se encuentra en la posisicón " + falsePosition(false) + " del array.");
 
 // 3- Crear otra función que devuelva el resultado de la operación entre los dos elementos numéricos que contiene el array.<br>Dicha función recibirá dos parámetros: el array y la operación ('suma', 'resta', 'mult', 'div') a realizar
 
@@ -62,7 +61,6 @@ const calculator = (operation) => {
     let isFirst = false;
 
     for (i = 0; i<= valores.length -1; i++) {
-        console.log(valores[i]);
         if(typeof(valores[i]) == "number"){
             if(!isFirst){
                 firstNum = valores[i];
@@ -90,4 +88,5 @@ const calculator = (operation) => {
     return result;
 }
 
-console.log(calculator('suma'));
+let operacion = 'suma';
+console.log(`resultado de la operación ${operacion}` + calculator(operacion));
