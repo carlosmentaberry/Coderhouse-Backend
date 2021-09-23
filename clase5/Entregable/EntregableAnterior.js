@@ -74,9 +74,6 @@ module.exports = class Contenedor {
 
 }
 
-function getRandomArbitrary(min, max) {
-    return r;
-}
 const getMaxId = (array) => {
     let id_asignado = array.length + 1;
     while(true){
