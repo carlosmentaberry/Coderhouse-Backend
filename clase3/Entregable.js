@@ -7,7 +7,7 @@ class Contenedor {
         this.nombre = nombre;
     }
 
-    save(Object){
+    save = async (Object){
         console.log("OBTENIENDO TODOS LOS OBJETOS...");
         let content = fs.readFileSync(this.nombre, "utf-8");
         
