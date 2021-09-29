@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="html">
+        <h1>HOLA MUNDO</h1>
+    </div>
+    <div id="htmlscripttemplate">
+        <h1>HOLA MUNDO</h1>
+    </div>
+
+    <script type="text/x-handlebars-template" id="template">
+    <h1>{{firstname}}</h1>
+    <h2>{{lastname}}</h2>
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script>
+        const scripthtml = document.querySelector("#template").innerHTML;
+        console.log(scripthtml);
+
+        let templatescriptTemplate = Handlebars.compile(scripthtml);
+        lethtmlscriptTemplate = templatescriptTemplate({
+            firstname: "carlos",
+            lastname: "mentaberry"
+        });
+        const textoscriptTemplate = document.querySelector("#htmlscripttemplate");
+        textoscriptTemplate.innerHTML = lethtmlscriptTemplate;
+        console.log(lethtmlscriptTemplate);
+
+        let template = Handlebars.compile("<h1>hola {{name}}</h1>");
+        let html = template({ name: "carlos" });
+        const texto = document.querySelector("#html");
+        texto.innerHTML = html;
+        console.log(html);
+    </script>
+</body>
+
+</html>

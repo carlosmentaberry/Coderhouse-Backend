@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="htmlscripttemplate">
+    </div>
+
+    <script type="text/x-handlebars-template" id="template">
+        <h1>Datos Personales</h1>
+        <ul>
+            <li>nombre: {{nombre}}</li>
+            <li>apellido: {{apellido}}</li>
+            <li>edad: {{edad}}</li>
+            <li>email: {{email}}</li>
+            <li>telefono: {{telefono}}</li>
+        </ul>
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script>
+        const scripthtml = document.querySelector("#template").innerHTML;
+        console.log(scripthtml);
+
+        let person = {
+            nombre: "Carlos",
+            apellido: "Mentaberry",
+            edad: 32,
+            email: "email@email.com",
+            telefono: "+5491122334455"
+        };
+
+        let template = Handlebars.compile(scripthtml);
+        lethtmlscriptTemplate = template(person);
+        const script = document.querySelector("#htmlscripttemplate");
+        script.innerHTML = lethtmlscriptTemplate;
+    </script>
+</body>
+
+</html>
