@@ -3,103 +3,137 @@ const fs = require('fs');
 let array = [];
 
 module.exports = class Contenedor {
-    constructor(nombre){
+    constructor(nombre) {
         this.nombre = nombre;
     }
 
-    save(Object){
-        console.log("OBTENIENDO TODOS LOS OBJETOS...");
-        let content = fs.readFileSync(this.nombre, "utf-8");
-        
-        array = getArrayFromJsonContent(content);
-        
-        let id_asignado = getMaxId(array);
+    save = async (Object) => {
+        try {
+            let array = await this.readAll();
 
-        array.push({id: id_asignado, object: Object});
+            let id_asignado = getMaxId(array);
+            console.log("ID ASIGNADO: " + id_asignado);
 
-        fs.writeFileSync(this.nombre, JSON.stringify(array));
+            array.push({ id: id_asignado, object: Object });
 
-        console.log("GRABANDO OBJETO...");
-        console.log("**********");
-        console.log(Object);
-        console.log("ID ASIGNADO: " + id_asignado);
-        console.log("**********");
-        showArray(array);
-        return id_asignado;
+            let written = await this.write(JSON.stringify(array));
+            if(written){
+                console.log("Objeto agregado")
+                console.log("**********");
+                console.log(Object);
+                console.log("**********");
+            }else{
+                console.log("Error escribiendo el archivo");
+            }
+        } catch (err) {
+            console.log("Error obteniendo el archivo");
+            console.log(err);
+        }
     };
 
-    getAll(){
-        console.log("OBTENIENDO TODOS LOS OBJETOS...");
-        array = JSON.parse(fs.readFileSync(this.nombre, "utf-8"));
-        showArray(array);
-        return array;
+    readAll = async () => {
+        try {
+            console.log("OBTENIENDO TODOS LOS OBJETOS...");
+            let content = await fs.promises.readFile(this.nombre, "utf-8");
+            let array = getArrayFromJsonContent(content);
+            
+            return array;
+        } catch (err) {
+            console.log("Error obteniendo el archivo");
+            console.log(err);
+            return [];
+        }
     };
 
-    getRandom(){
-        let arr = JSON.parse(fs.readFileSync(this.nombre, "utf-8"));
-        let r = Math.floor(Math.random() * (arr.length - 1)) + 1;
+    getRandom = async () => {
+        let arr = await this.readAll();
+        let r = Math.floor(Math.random() * (arr.length)) + 1;
         return arr.filter(prod => prod.id == r);
     }
 
-    getById(id){
+    getById = async (id) => {
         console.log("OBTENIENDO OBJETO POR ID..." + id);
-        array = JSON.parse(fs.readFileSync(this.nombre, "utf-8")).filter(x => x.id == id);
+        let array = await this.readAll();
         console.log("**********");
-        console.log(array);
+        console.log(JSON.stringify(array.filter(x => x.id == id)));
         console.log("**********");
     };
 
-    deleteById(id){
+    deleteById = async (id) => {
         console.log("BORRANDO OBJETO POR ID..." + id);
-        array = JSON.parse(fs.readFileSync(this.nombre, "utf-8")).filter(x => x.id == id);
-        const index = array.indexOf(id);
+        let array = await this.readAll();
+        const index = array.indexOf(array.filter(x => x.id == id)[0]);
         if (index > -1) {
             array.splice(index, 1);
         }
-        fs.writeFileSync(this.nombre, JSON.stringify(array), "utf-8");
-    };
-
-    deleteAll(){
-        console.log("BORRANDO TODOS LOS OBJETOS...");
-        for(let i = 0; i<= array.length; i++){
-            array.pop();
+        let written = await this.write(JSON.stringify(array));
+        if(written){
+            console.log("Elemento borrado");
+        }else{
+            console.log("Elemento no borrado");
         }
-
-        fs.writeFileSync(this.nombre, JSON.stringify(array), "utf-8");
-        
-        array = fs.readFileSync(this.nombre, "utf-8");
-        console.log("Array vacío");
-        console.log(array);
     };
+
+    deleteAll = async () => {
+        console.log("BORRANDO TODOS LOS OBJETOS...");
+        let written = await this.write("[]");
+        if(written){
+            console.log("Elementos borrados");
+        }else{
+            console.log("Elementos no borrados");
+        }
+    };
+
+    write = async (content) =>{
+        let result = true;
+        await fs.promises.writeFile(this.nombre, content, error =>{
+            if(error){
+                result = false;
+            }
+        });
+        return result;
+    }
 
 }
-
 const getMaxId = (array) => {
     let id_asignado = array.length + 1;
-    while(true){
-        if(!array.filter(x => x.id == id_asignado)){
-            id_asignado = array.length + 1;
-        }else{
-            break;
+    if (array.length == 0) {
+        id_asignado = 1;
+    }
+    else {
+        while (true) {
+            if (!array.indexOf(id_asignado)) {
+                id_asignado += 1;
+            } else {
+                break;
+            }
         }
     }
+    console.log("id_asignado: " + id_asignado);
     return id_asignado;
 };
+
 const showArray = (array) => {
-    console.log("ARRAY:");
-    console.log("**********");
-    console.log(array);
-    console.log("**********");
+    if (array.length > 0) {
+        console.log("ARRAY:");
+        console.log("**********");
+        console.log(array);
+        console.log("**********");
+    } else {
+        console.log("ARRAY VACIO:");
+        console.log("**********");
+        console.log(array);
+        console.log("**********");
+    }
 };
 const getArrayFromJsonContent = (content) => {
-    try 
-    {
-        if(content.length <= 0){
-            array = [];
-        }else{
+    let array = [];
+    try {
+        if (content.length > 0) {
             array = JSON.parse(content);
         }
-    }catch (ex){
+    } catch (ex) {
+        console.log("Error converting content to array")
         array = [];
     }
     return array;

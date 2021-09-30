@@ -6,12 +6,12 @@ const Cont = require("./EntregableAnterior");
 const app = express();
 let cont = new Cont("productos.txt");
 
-app.get("/productos", (req, res) =>{
-    res.send(cont.getAll());
+app.get("/productos", async (req, res) =>{
+    res.send(await cont.readAll());
 });
 
-app.get("/productosRandom", (req, res) =>{
-    res.send(cont.getRandom());
+app.get("/productosRandom", async (req, res) =>{
+    res.send(await cont.getRandom());
 });
 
 app.listen(8080, () => {
