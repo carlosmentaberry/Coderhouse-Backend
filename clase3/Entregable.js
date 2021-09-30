@@ -43,8 +43,8 @@ class Contenedor {
         }
     };
 
-    getRandom(){
-        let arr = JSON.parse(fs.readFileSync(this.nombre, "utf-8"));
+    getRandom = async () => {
+        let arr = await this.readAll();
         let r = Math.floor(Math.random() * (arr.length)) + 1;
         return arr.filter(prod => prod.id == r);
     }
