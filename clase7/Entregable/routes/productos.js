@@ -23,35 +23,33 @@ const arr = [
 
 const { Router } = express;
 const router = new Router();
+const Contenedor = require("../EntregableAnterior");
 
-router.get("/productos/:id", (req, res) =>
+const cont = new Contenedor("products.txt");
+
+router.get("/productos/:id", async (req, res) =>
 {
-    res.json(arr.filter(x => x.id == req.params.id));
+    res.send(await cont.getById(req.params.id));
 });
 
-router.put("/productos/:id", (req, res) =>
+router.put("/productos/:id", async (req, res) =>
 {
-    arr.filter(x => x.id == req.params.id).price = req.body.price;
-    arr.filter(x => x.id == req.params.id).title = req.body.title;
-    arr.filter(x => x.id == req.params.id).thumbnail = req.body.thumbnail;
-    res.json(arr);
+    res.send(await cont.updateById(req.params.id, req.body));
 });
 
-router.delete("/productos/:id", (req, res) =>
+router.delete("/productos/:id", async (req, res) =>
 {
-    arr.splice(req.params.id, 1);
-    res.json(arr);
+    res.send(await cont.deleteById(req.params.id));
 });
 
-router.get("/productos", (req, res) =>
+router.get("/productos", async (req, res) =>
 {
-    res.json(arr);
+    res.send(await cont.readAll());
 });
 
-router.post("/productos", (req, res) =>
+router.post("/productos", async (req, res) =>
 {
-    arr.push(req.body);
-    res.json(arr);
+    res.send(await cont.save(req.body));
 });
 
 module.exports = router;

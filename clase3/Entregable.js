@@ -51,10 +51,11 @@ class Contenedor {
 
     getById = async (id) => {
         console.log("OBTENIENDO OBJETO POR ID..." + id);
-        let array = await this.readAll();
+        let array = JSON.parse(await this.readAll()).filter(x => x.id == id);
         console.log("**********");
-        console.log(JSON.stringify(array.filter(x => x.id == id)));
+        console.log(JSON.stringify(array));
         console.log("**********");
+        return array;
     };
 
     deleteById = async (id) => {

@@ -7,12 +7,13 @@ module.exports = class Contenedor {
 
     save = async (Object) => {
         try {
-            let array = await this.readAll();
+            console.log("filename: " + this.nombre);
+            let array = JSON.parse(await this.readAll());
 
             let id_asignado = getMaxId(array);
             console.log("ID ASIGNADO: " + id_asignado);
 
-            array.push({ id: id_asignado, object: Object });
+            array.push(Object);
 
             let written = await this.write(JSON.stringify(array));
             if(written){
@@ -32,13 +33,14 @@ module.exports = class Contenedor {
     readAll = async () => {
         try {
             console.log("OBTENIENDO TODOS LOS OBJETOS...");
-            let content = await fs.promises.readFile(this.nombre, "utf-8");
+            let path = __dirname + "\\" + this.nombre;
+            console.log(path);
+            let content = await fs.promises.readFile(path, "utf-8");
             let array = getArrayFromJsonContent(content);
-            
             return array;
         } catch (err) {
-            console.log("Error obteniendo el archivo");
             console.log(err);
+            console.log("Error obteniendo el archivo");
             return [];
         }
     };
@@ -55,21 +57,44 @@ module.exports = class Contenedor {
         console.log("**********");
         console.log(JSON.stringify(array));
         console.log("**********");
-        return array;
+        return array.length <= 0 ? "No existe el objeto" : array;
+    };
+
+    updateById = async (id, object) => {
+        console.log("OBTENIENDO OBJETO POR ID..." + id);
+        let array = JSON.parse(await this.readAll());
+        if(array.filter(x => x.id == id).length > 0){
+            array.map(obj => {
+                if(obj.id == id){
+                    obj.price = object.price;
+                    obj.title = object.title;
+                    obj.thumbnail = object.thumbnail;
+                }
+            })
+            this.write(JSON.stringify(array));
+            console.log("**********");
+            console.log(JSON.stringify(array));
+            console.log("**********");
+            return array.length <= 0 ? "No existe el objeto" : array;
+        }else{
+            return "No existe el objeto";
+        }
     };
 
     deleteById = async (id) => {
         console.log("BORRANDO OBJETO POR ID..." + id);
-        let array = await this.readAll();
+        let array = JSON.parse(await this.readAll());
         const index = array.indexOf(array.filter(x => x.id == id)[0]);
         if (index > -1) {
             array.splice(index, 1);
-        }
-        let written = await this.write(JSON.stringify(array));
-        if(written){
-            console.log("Elemento borrado");
+            let written = await this.write(JSON.stringify(array));
+            if(written){
+                console.log("Elemento borrado");
+            }else{
+                console.log("Elemento no borrado");
+            }
         }else{
-            console.log("Elemento no borrado");
+            return "No existe el objeto";
         }
     };
 
@@ -129,7 +154,7 @@ const getArrayFromJsonContent = (content) => {
     let array = [];
     try {
         if (content.length > 0) {
-            array = JSON.parse(content);
+            array = content;
         }
     } catch (ex) {
         console.log("Error converting content to array")
