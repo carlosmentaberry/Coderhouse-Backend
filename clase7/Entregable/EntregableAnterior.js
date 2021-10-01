@@ -1,3 +1,4 @@
+const { O_NONBLOCK } = require('constants');
 const fs = require('fs');
 
 module.exports = class Contenedor {
@@ -12,15 +13,15 @@ module.exports = class Contenedor {
 
             let id_asignado = getMaxId(array);
             console.log("ID ASIGNADO: " + id_asignado);
+            array.push({id: id_asignado, price: Object.price, title: Object.title, thumbnail: Object.thumbnail});
 
-            array.push(Object);
-
-            let written = await this.write(JSON.stringify(array));
+            let written = await this.write(JSON.stringify(array, null, 2));
             if(written){
                 console.log("Objeto agregado")
                 console.log("**********");
                 console.log(Object);
                 console.log("**********");
+                return "Objeto agregado";
             }else{
                 console.log("Error escribiendo el archivo");
             }
@@ -55,7 +56,7 @@ module.exports = class Contenedor {
         console.log("OBTENIENDO OBJETO POR ID..." + id);
         let array = JSON.parse(await this.readAll()).filter(x => x.id == id);
         console.log("**********");
-        console.log(JSON.stringify(array));
+        console.log(JSON.stringify(array, null, 2));
         console.log("**********");
         return array.length <= 0 ? "No existe el objeto" : array;
     };
@@ -71,9 +72,9 @@ module.exports = class Contenedor {
                     obj.thumbnail = object.thumbnail;
                 }
             })
-            this.write(JSON.stringify(array));
+            this.write(JSON.stringify(array, null, 2));
             console.log("**********");
-            console.log(JSON.stringify(array));
+            console.log(JSON.stringify(array, null, 2));
             console.log("**********");
             return array.length <= 0 ? "No existe el objeto" : array;
         }else{
@@ -87,7 +88,7 @@ module.exports = class Contenedor {
         const index = array.indexOf(array.filter(x => x.id == id)[0]);
         if (index > -1) {
             array.splice(index, 1);
-            let written = await this.write(JSON.stringify(array));
+            let written = await this.write(JSON.stringify(array, null, 2));
             if(written){
                 console.log("Elemento borrado");
             }else{
