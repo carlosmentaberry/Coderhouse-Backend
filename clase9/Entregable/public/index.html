@@ -8,6 +8,25 @@
     <title>Entregable 5</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+        </script>
 </head>
 
 <body>
@@ -28,24 +47,38 @@
     </nav>
 
     <h2 class="text-center">Ingrese Producto</h2>
-    <div class="container mt-3 p-3 bg-light">
-        <form action="http://localhost:8080/productos" method="POST">
+    <div class="container mt-3 p-3 bg-light" id="myform">
+        <form action="http://localhost:8080/productos" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Id:</label>
-                <input type="text" class="form-control" name="id" id="id" placeholder="1">
+                <label for="exampleInputEmail1" class="form-label is-invalid">Id:</label>
+                <input type="text" class="form-control" name="id" id="id" placeholder="1" required>
+                <div class="invalid-feedback">
+                    Please choose an id.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Title:</label>
-                <input type="text" class="form-control" name="title" id="title" placeholder="Laptop">
+                <input type="text" class="form-control is-invalid" name="title" id="title" placeholder="Laptop"
+                    required>
+                <div class="invalid-feedback">
+                    Please choose a Title.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Price:</label>
-                <input type="text" class="form-control" name="price" id="price" placeholder="250.000">
+                <input type="text" class="form-control is-invalid" name="price" id="price" placeholder="250.000"
+                    required>
+                <div class="invalid-feedback">
+                    Please choose a Price.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Thumbnail:</label>
-                <input type="text" class="form-control" name="thumbnail" id="thumbnail"
-                    placeholder="https://www.imagehost.com/somepic.jpg">
+                <input type="text" class="form-control is-invalid" name="thumbnail" id="thumbnail"
+                    placeholder="https://www.imagehost.com/somepic.jpg" required>
+                <div class="invalid-feedback">
+                    Please choose a Thumbnail.
+                </div>
             </div>
             <button id="enviar" type="submit" class="btn btn-primary">Guardar</button>
         </form>

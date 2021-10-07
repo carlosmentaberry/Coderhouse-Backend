@@ -23,7 +23,7 @@ app.set("view engine", "hbs");
 
 app.post("/productos", (req, res) => {
   cont.save({ id: req.body.id, title: req.body.title, price: req.body.price, thumbnail: req.body.thumbnail });
-  res.redirect('/')
+  res.redirect('/productos')
 });
 
 app.get("/productos", async (req, res) => {
