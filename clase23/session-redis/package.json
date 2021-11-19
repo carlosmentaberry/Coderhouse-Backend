@@ -1,0 +1,22 @@
+{
+  "name": "session-redis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "connect-redis": "^6.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "redis": "^3.1.2",
+    "session-file-store": "^1.5.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "cookie": {
+        "originalMaxAge": 3000,
+        "expires": "2021-11-19T01:32:29.123Z",
+        "httpOnly": true,
+        "path": "/"
+    },
+    "user": "charly",
+    "password": "123456",
+    "__lastAccess": 1637285546123
+}
