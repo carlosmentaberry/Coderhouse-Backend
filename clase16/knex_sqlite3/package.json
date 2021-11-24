@@ -1,7 +1,7 @@
 {
-  "name": "entregable",
+  "name": "knex_sqlite3",
   "version": "1.0.0",
-  "description": "",
+  "description": "// npx knex init",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
@@ -11,10 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "faker": "^5.5.3",
-    "normalizr": "^3.6.1"
+    "knex": "^0.95.11",
+    "sqlite3": "^5.0.2",
+    "upgrade": "^1.1.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.14"
   }
 }

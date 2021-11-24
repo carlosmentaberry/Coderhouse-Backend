@@ -1,11 +1,19 @@
 const express = require("express");
-
+const faker = require("faker");
 const app = express();
 
 app.get("/api/productos-test", (req,res)=>{
-    res.send("");
-})
+    let array = [];
+    for(i = 0; i<= 5; i++){
+        array.push({
+            name: faker.commerce.product(),
+            price: faker.commerce.price(),
+            picture: faker.image.image()
+        });
+    }
 
+    res.send({data:array});
+})
 
 server.listen(8080, () => {
     console.log("app running on port 8080");
