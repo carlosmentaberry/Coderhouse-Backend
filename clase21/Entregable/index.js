@@ -1,20 +1,33 @@
 const express = require("express");
-const faker = require("faker");
+const path = require("path");
+
 const app = express();
+const PORT = process.env.PORT || 8080;
 
-app.get("/api/productos-test", (req,res)=>{
-    let array = [];
-    for(i = 0; i<= 5; i++){
-        array.push({
-            name: faker.commerce.product(),
-            price: faker.commerce.price(),
-            picture: faker.image.image()
-        });
-    }
+app.use(express.static(__dirname + "/public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    res.send({data:array});
-})
+const chatRoute = require("./routes/chats");
+app.use("/api/chat", chatRoute);
 
-server.listen(8080, () => {
-    console.log("app running on port 8080");
+const productostestRoute = require("./routes/productosTest");
+app.use("/api/productos-test", productostestRoute);
+
+
+const http = require("http");
+const server = http.createServer(app);
+
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+    socket.emit("render", "");
+    socket.on("NewChat", () => {
+        io.sockets.emit("render", "");
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`app running on port ${PORT}`);
 });
