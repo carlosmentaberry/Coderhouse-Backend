@@ -3,6 +3,7 @@ const socket = io();
 socket.on("render", (data)=>{
     renderChats();
     renderProducts();
+    mainLogin();
 });
 
 function renderChats(){
@@ -105,3 +106,53 @@ function renderProducts(){
     });
     return false;
 }
+
+function mainLogin(){
+    const url = '/api/login';
+    /* Funcion fetch para saber si esta logeado */
+    const options = {
+        method: "GET"
+    }
+    fetch(url)
+    .then((resp) => resp.json())
+    .then(function(data){
+        if (data) {
+            let x = document.getElementById("logout");
+            x.innerHTML = "Hola " + data.user;
+            
+        }else{
+            window.location.href = "login.html";
+        }
+    })
+    .catch(function(error) {
+        console.log(error);
+      });
+
+}
+
+function logout(){
+    const url = '/api/login';
+    //Funcion fetch para saber si esta logeado
+    const options = {
+        method: "GET"
+    }
+    fetch(url)
+    .then((resp) => resp.json())
+    .then(function(data){
+        if (data) {
+            console.log(data)
+            let x = document.getElementById("logout");
+            x.innerHTML = "Adios " + data.user;
+            setTimeout(function(){
+                window.location.href = "api/logout"
+            }, 2000);
+            
+        }else{
+            window.location.href = "login.html";
+        }
+    })
+    .catch(function(error) {
+        console.log(error);
+      });
+}
+

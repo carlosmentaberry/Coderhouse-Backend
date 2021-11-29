@@ -1,7 +1,5 @@
 const express = require("express");
 const path = require("path");
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -10,31 +8,11 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
-app.use(session({
-  store: MongoStore.create({
-      mongoUrl:"mongodb+srv://charly:Charly12@cluster0.8xt8t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-      mongoOptions: advancedOptions
-  }),
-  cookie: { maxAge: 10000 },
-  secret:"secret",
-  resave:false,
-  saveUninitialized:false,
-  rolling:true
-}))
-
-
 const chatRoute = require("./routes/chats");
 app.use("/api/chat", chatRoute);
 
 const productostestRoute = require("./routes/productosTest");
 app.use("/api/productos-test", productostestRoute);
-
-const login = require("./routes/login");
-app.use("/api/login", login);
-
-const logout = require("./routes/logout");
-app.use("/api/logout", logout);
 
 
 const http = require("http");
