@@ -117,7 +117,7 @@ function mainLogin(){
     .then((resp) => resp.json())
     .then(function(data){
         if (data) {
-            let x = document.getElementById("logout");
+            let x = document.getElementById("login");
             x.innerHTML = "Hola " + data.user;
             
         }else{
