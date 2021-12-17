@@ -1,0 +1,10 @@
+[2021-12-16T23:01:05.594] [WARN] archivo2 - loggerConsola warn
+[2021-12-16T23:01:05.594] [INFO] archivo2 - loggerConsola info
+[2021-12-16T23:01:05.594] [ERROR] archivo2 - loggerConsola error
+[2021-12-16T23:01:05.594] [FATAL] archivo2 - loggerConsola fatal
+[2021-12-16T23:02:56.094] [WARN] archivo2 - loggerConsola warn
+[2021-12-16T23:02:56.094] [INFO] archivo2 - loggerConsola info
+[2021-12-16T23:02:56.094] [ERROR] archivo2 - loggerConsola error
+[2021-12-16T23:02:56.094] [FATAL] archivo2 - loggerConsola fatal
+[2021-12-16T23:02:56.094] [ERROR] todos - loggerConsola error
+[2021-12-16T23:02:56.094] [FATAL] todos - loggerConsola fatal
