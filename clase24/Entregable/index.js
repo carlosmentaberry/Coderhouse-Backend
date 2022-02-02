@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 app.use(session({
   store: MongoStore.create({
-      mongoUrl:"mongodb+srv://charly:Charly12@cluster0.8xt8t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+      mongoUrl:"mongodb+srv://charly:Charly1234@cluster0.8xt8t.mongodb.net/ecommerce-nodejs?retryWrites=true&w=majority",
       mongoOptions: advancedOptions
   }),
   cookie: { maxAge: 10000 },
